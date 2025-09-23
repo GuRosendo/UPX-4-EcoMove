@@ -34,14 +34,19 @@
           "data": {
             "scheme": "https"
           },
-          "category": ["BROWSABLE"]
+          "category": [
+            "BROWSABLE"
+          ]
         },
         {
           "action": "VIEW",
           "data": {
             "scheme": "ecomove.app.com"
           },
-          "category": ["DEFAULT", "BROWSABLE"]
+          "category": [
+            "DEFAULT",
+            "BROWSABLE"
+          ]
         }
       ],
       "adaptiveIcon": {
@@ -54,7 +59,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "95d41330-5702-4bc3-9c22-dbd9e25dfd22"
+        "projectId": "8b4226a3-c627-4a4c-98d2-25ad885c9846"
       }
     }
   }
