@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "ecomove",
+    "slug": "ecomove",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Precisamos de acesso à câmera para tirar fotos.",
+        "NSPhotoLibraryUsageDescription": "Precisamos de acesso à galeria para selecionar fotos."
+      }
+    },
+    "android": {
+      "package": "ecomove.app.com",
+      "permissions": [
+        "INTERNET",
+        "READ_EXTERNAL_STORAGE",
+        "SYSTEM_ALERT_WINDOW",
+        "VIBRATE",
+        "WRITE_EXTERNAL_STORAGE",
+        "CAMERA"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "https"
+          },
+          "category": ["BROWSABLE"]
+        },
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "ecomove.app.com"
+          },
+          "category": ["DEFAULT", "BROWSABLE"]
+        }
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": ""
+    },
+    "extra": {
+      "eas": {
+        "projectId": "95d41330-5702-4bc3-9c22-dbd9e25dfd22"
+      }
+    }
+  }
+}
