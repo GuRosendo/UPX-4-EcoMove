@@ -183,11 +183,11 @@ const RequestLogin = ({ navigation }) => {
                                 <Input
                                     label="Altura"
                                     placeholder="Digite sua Altura"
-                                    icon="user-lock"
+                                    icon="ruler"
                                     placeholderTextColor={colors.text}
                                     onChangeText={handleChange('height')}
                                     value={formatHeight(values.height, true)}
-                                    keyboardType="ruler"
+                                    keyboardType="numeric"
                                 />
                                 {!isSubmitting &&
                                     <StyledButton onPress={handleSubmit} FormRequestLogin={true} background={theme == "light" ? colors.mediumRed : colors.darkRed}>
