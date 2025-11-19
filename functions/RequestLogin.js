@@ -74,6 +74,13 @@ export const handleRequestLogin = async(credentials) => {
         const stored = await AsyncStorage.getItem("users");
         const list = stored ? JSON.parse(stored) : [];
 
+        const emailExists = list.some(user => user.email.toLowerCase() === credentials.email.toLowerCase());
+        
+        if(emailExists){
+            handleMessage(false, "Ocorreu um erro", "Já existe uma conta com esse email");
+            return false;
+        }
+
         const nextId = list.length > 0 ? list[list.length - 1].id + 1 : 1;
 
         const newUser = {

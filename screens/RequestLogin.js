@@ -174,7 +174,7 @@ const RequestLogin = ({ navigation }) => {
                                 <Input
                                     label="Peso"
                                     placeholder="Digite seu Peso"
-                                    icon="user-lock"
+                                    icon="weight-scale"
                                     placeholderTextColor={colors.text}
                                     onChangeText={handleChange('weight')}
                                     value={formatWeight(values.weight, true)}
@@ -187,7 +187,7 @@ const RequestLogin = ({ navigation }) => {
                                     placeholderTextColor={colors.text}
                                     onChangeText={handleChange('height')}
                                     value={formatHeight(values.height, true)}
-                                    keyboardType="numeric"
+                                    keyboardType="ruler"
                                 />
                                 {!isSubmitting &&
                                     <StyledButton onPress={handleSubmit} FormRequestLogin={true} background={theme == "light" ? colors.mediumRed : colors.darkRed}>
