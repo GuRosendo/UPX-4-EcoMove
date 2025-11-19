@@ -28,7 +28,7 @@ import { sexo } from '../assets/data/options';
 //function format date BR
 import { formatDate } from '../functions/general/Masks';
 //formats strings 
-import { formatCpf, formatSus, formatCellphone, formatCep } from '../functions/general/Masks';
+import { formatWeight, formatHeight, formatCellphone } from '../functions/general/Masks';
 import { LogoCustom } from '../components/general/LogoCustom';
 
 import { useTheme } from '../components/ThemeContext';
@@ -62,13 +62,13 @@ const RequestLogin = ({ navigation }) => {
 
     return (
         <KeyboardProperlyWorking isScrollView={true}>
-            <FundoApp>
+            <FundoApp style={{marginBottom: 130}}>
                 <InnerContainer>
-                    <LogoCustom bottom={false}/>
+                    <LogoCustom bottom={false} />
 
                     <Formik
                         initialValues={{
-                            nomeCompleto: "", sexo: "", celular: "", dataNascimento: "", email: "", password: "", repeatedPassword: ""
+                            nomeCompleto: "", sexo: "", celular: "", dataNascimento: "", email: "", password: "", repeatedPassword: "", weight: "", height: ""
                         }}
                         onSubmit={(values, { setSubmitting }) => {
                             setSubmitting(true);
@@ -79,8 +79,8 @@ const RequestLogin = ({ navigation }) => {
                                 dataNascimento: formatDate(dateSelected, "EUA", true), //Date value, format, return time
                             };
 
-                            setTimeout(() => { 
-                                if(handleRequestLogin(values)){
+                            setTimeout(async() => { 
+                                if(await handleRequestLogin(values)){
                                     navigation.navigate("Login")
                                 }
                                 setSubmitting(false);
@@ -170,6 +170,24 @@ const RequestLogin = ({ navigation }) => {
                                     isPassword={true}
                                     hidePassword={hidePassword}
                                     setHidePassword={setHidePassword}
+                                />
+                                <Input
+                                    label="Peso"
+                                    placeholder="Digite seu Peso"
+                                    icon="user-lock"
+                                    placeholderTextColor={colors.text}
+                                    onChangeText={handleChange('weight')}
+                                    value={formatWeight(values.weight, true)}
+                                    keyboardType="numeric"
+                                />
+                                <Input
+                                    label="Altura"
+                                    placeholder="Digite sua Altura"
+                                    icon="user-lock"
+                                    placeholderTextColor={colors.text}
+                                    onChangeText={handleChange('height')}
+                                    value={formatHeight(values.height, true)}
+                                    keyboardType="numeric"
                                 />
                                 {!isSubmitting &&
                                     <StyledButton onPress={handleSubmit} FormRequestLogin={true} background={theme == "light" ? colors.mediumRed : colors.darkRed}>

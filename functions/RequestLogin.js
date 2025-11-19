@@ -2,8 +2,10 @@ import { handleMessage } from "../components/general/ToastMessage";
 import { validateCellphone } from "./general/ValidateCellphone";
 import { validateDate } from "./general/ValidateDate";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 //request login
-export const handleRequestLogin = (credentials) => {
+export const handleRequestLogin = async(credentials) => {
     let result = { success: true, status: 'Sucesso ao criar conta', message: 'Use os dados informados para logar' }; //api request return
 
     //validate nome
@@ -52,6 +54,16 @@ export const handleRequestLogin = (credentials) => {
         return false;
     }
 
+    if(!credentials.weight || credentials.weight > 500 || credentials.weight <= 0){
+        handleMessage(false, "Ocorreu um erro", "Peso incorreto");
+        return false;
+    }
+
+    if(!credentials.height || credentials.height > 3 || credentials.weight <= 0){
+        handleMessage(false, "Ocorreu um erro", "Altura incorreta");
+        return false;
+    }
+
     //requisição api
     if(!result.success){
         handleMessage(result.success, result.status, result.message);
@@ -59,6 +71,29 @@ export const handleRequestLogin = (credentials) => {
     }
     
     if(result.success){
+        const stored = await AsyncStorage.getItem("users");
+        const list = stored ? JSON.parse(stored) : [];
+
+        const nextId = list.length > 0 ? list[list.length - 1].id + 1 : 1;
+
+        const newUser = {
+            id: nextId,
+            fullName: credentials.nomeCompleto,
+            gender: credentials.sexo,
+            phone: credentials.celular,
+            birthDate: credentials.dataNascimento,
+            email: credentials.email,
+            password: credentials.password,
+            weight: credentials.weight,
+            height: credentials.height,
+            isLogged: 0
+        };
+
+        list.push(newUser);
+
+
+        await AsyncStorage.setItem("users", JSON.stringify(list));
+
         handleMessage(result.success, result.status, result.message);
         return true;
     }

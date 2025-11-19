@@ -393,17 +393,6 @@ export const ContainerMenu = styled.View`
     flex: 1;
 `;
 
-export const DrawerContentInfos = styled.View`
-    flex: 1;
-`;
-
-export const DrawerViewItems = styled.View`
-    width: 100%;
-    flex-direction: row; 
-    align-items: center;
-    justify-content: space-around; 
-`;
-
 export const UserInfoSection = styled.View`
     padding-left: 20px;
 `;

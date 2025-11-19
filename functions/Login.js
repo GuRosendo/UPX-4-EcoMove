@@ -1,8 +1,13 @@
 import{ handleMessage } from "../components/general/ToastMessage";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 //login
-export const handleLogin = (credentials) =>{
+export const handleLogin = async(credentials) =>{
     let result = { success: true, status: 'Sucesso', message: 'Login correto' };
+
+    const stored = await AsyncStorage.getItem("users");
+    const list = stored ? JSON.parse(stored) : [];
 
     if(credentials.login == "" || credentials.password == ''){
         handleMessage(false, "Ocorreu um erro", "Preencha todos os campos");
@@ -19,7 +24,14 @@ export const handleLogin = (credentials) =>{
         return false;
     }
 
-    if(result.success){
-        return true;
+    const userFound = list.find(
+        u => u.email === credentials.login && u.password === credentials.password
+    );
+
+    if (!userFound) {
+        handleMessage(false, "Erro", "Email ou senha incorreto(s)");
+        return false;
     }
+
+    return true;
 };

@@ -1,16 +1,34 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { handleMessage } from "../components/general/ToastMessage";
+
 //Check Login
 export const persistLogin = async (credentials, setStoredData) => {
-    try{
-        const updatedCredentials = { ...credentials, ocultarAnimacao: 0 };
+    try {
+        const stored = await AsyncStorage.getItem("users");
+        const list = stored ? JSON.parse(stored) : [];
 
-        await AsyncStorage.setItem("userData", JSON.stringify(updatedCredentials));
+        const updatedList = list.map(u => ({ ...u, isLogged: 0 }));
 
-        setStoredData(updatedCredentials);
-    }catch (error){
-        console.log("Ocorreu um erro ao salvar os dados no AsyncStorage, erro: " + error);
+        const userIndex = updatedList.findIndex(
+            u => u.email === credentials.login && u.password === credentials.password
+        );
 
-        handleMessage(false, "Ocorreu um erro", "Os dados de login não puderam ser salvos, tente novamente");
+        if (userIndex === -1) {
+            handleMessage(false, "Erro", "Usuário não encontrado para persistir login");
+            return;
+        }
+
+        updatedList[userIndex].isLogged = 1;
+
+        await AsyncStorage.setItem("users", JSON.stringify(updatedList));
+
+        await AsyncStorage.setItem("userData", JSON.stringify(updatedList[userIndex]));
+
+        setStoredData(updatedList[userIndex]);
+
+    } catch (error) {
+        console.log("Erro ao persistir login:", error);
+        handleMessage(false, "Erro", "Falha ao salvar login.");
     }
 };

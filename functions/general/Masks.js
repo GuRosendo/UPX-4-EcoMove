@@ -89,6 +89,58 @@ export const formatCellphone = (cellphone, masked, censure) => {
     return cellphone;
 }
 
+export const formatHeight = (value, masked) => {
+  if (!value) return "";
+
+  value = value.replace(/\D/g, "");
+
+  value = value.substring(0, 3);
+
+  if (!masked) return value;
+
+  if (value.length === 1) {
+    return value;
+  }
+
+  if (value.length === 2) {
+    return value.replace(/(\d)(\d)/, "$1,$2");
+  }
+
+  if (value.length === 3) {
+    return value.replace(/(\d)(\d{2})/, "$1,$2");
+  }
+
+  return value;
+};
+
+export const formatWeight = (value, masked) => {
+  if (!value) return "";
+
+  value = value.replace(/\D/g, "");
+
+  value = value.substring(0, 5);
+
+  if (!masked) return value;
+
+  if (value.length <= 2) {
+    return value;
+  }
+
+  if (value.length === 3) {
+    return value.replace(/(\d)(\d{2})/, "$1,$2");
+  }
+
+  if (value.length === 4) {
+    return value.replace(/(\d{2})(\d{2})/, "$1,$2");
+  }
+
+  if (value.length === 5) {
+    return value.replace(/(\d{3})(\d{2})/, "$1,$2");
+  }
+
+  return value;
+};
+
 //format cep
 export const formatCep = (cep, masked) => {
     if(!cep){

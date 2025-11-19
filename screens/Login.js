@@ -76,12 +76,12 @@ const Login = ({ navigation, route }) => {
                         onSubmit={(values, { setSubmitting }) => {
                             setSubmitting(true);
 
-                            setTimeout(() => { 
-                                if(handleLogin(values)){
-                                    persistLogin(values, setStoredData);
+                            setTimeout(async() => { 
+                                if(await handleLogin(values)){
+                                    await persistLogin(values, setStoredData);
                                 }
                                 setSubmitting(false);
-                            }, 2000)
+                            }, 1000)
                         }}
                     >
                         {({ handleChange, handleBlur, handleSubmit, isSubmitting, values }) => (
@@ -110,23 +110,6 @@ const Login = ({ navigation, route }) => {
                                     />
                                 )}
                                 
-                                {!hidePasswordInput && (
-                                    <StyledRowView>
-                                        <CheckBoxKeepConnected 
-                                            borderColor={colors.text}
-                                            checked={isChecked} 
-                                            checkedColor={colors.text}
-                                            onPress={handleKeepConnected} 
-                                        />
-                                        <TextLink keepConnected={true} onPress={handleKeepConnected}>
-                                            <TextLinkContent keepConnected={true} color={colors.text}>Mantenha-me conectado</TextLinkContent>
-                                        </TextLink>
-                                        <TextLink forgotPassword={true} onPress={() => navigation.navigate("ForgotPassword")}>
-                                            <TextLinkContent forgotPassword={true} color={colors.text}>Esqueci minha senha</TextLinkContent>
-                                        </TextLink>
-                                    </StyledRowView>
-                                )}
-
                                 {!isSubmitting && 
                                     <StyledButton onPress={handleSubmit} background={theme == "light" ? colors.mediumRed : colors.darkRed}>
                                         <ButtonText color={colors.white}>Entrar</ButtonText>

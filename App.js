@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StatusBar, View, StyleSheet, Animated, Dimensions, ActivityIndicator } from "react-native";
+import { StatusBar, View, StyleSheet, Animated, Dimensions, Image } from "react-native";
 import NavigationRootStack from "./navigators/NavigationRootStack";
 import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
 
@@ -10,8 +10,6 @@ import { VerifyLogin } from "./functions/general/verifyLogin";
 import { ThemeProvider } from "./components/ThemeContext";
 
 import { loadThemeFromStorage } from "./components/LoadThemeFromStorage";
-
-import { setGlobalSetStoredData } from "./API/controller/RequesterContext";
 
 import { handleMessage } from "./components/general/ToastMessage";
 import { PageTitle } from "./components/general/styles";
@@ -87,18 +85,14 @@ export default function Index() {
   const [appLoaded, setAppLoaded] = useState(false);
 
   const translateX = useRef(new Animated.Value(-Dimensions.get("window").width)).current;
-  const translateX2 = useRef(new Animated.Value(Dimensions.get("window").width)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
   const [theme, setTheme] = useState("light");
   const [themeBackground, setThemeBackground] = useState("#F2F0EF");
 
   const [storedData, setStoredData] = useState(null);
-  
-  useEffect(() => {
-    setGlobalSetStoredData(setStoredData);
-  }, [setStoredData]);
 
+  const logoSource = theme === "light" ? require("./assets/images/Logo.png") : require("./assets/images/LogoLight.png");
 
   useEffect(() => {
     const checkTheme = async () => {
@@ -111,13 +105,7 @@ export default function Index() {
       try {
         Animated.parallel([
           Animated.timing(translateX, {
-            toValue: -20, 
-            duration: 1500, 
-            useNativeDriver: true,
-          }),
-          
-          Animated.timing(translateX2, {
-            toValue: 20, 
+            toValue: 0, 
             duration: 1500, 
             useNativeDriver: true,
           }),
@@ -155,11 +143,14 @@ export default function Index() {
           <View style={styles.splashContainer}>
             <Animated.View
               style={[ 
-                styles.iconLogo,
                 { transform: [{ translateX: translateX }] }, 
               ]}
             >
-              <PageTitle color={"#FFF"}>Logo</PageTitle>
+              <Image
+                source={logoSource}
+                style={styles.logo}
+                resizeMode="contain"
+              />
             </Animated.View>
           </View>
         </>
@@ -191,8 +182,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
-  iconLogo: {
-    position: "absolute",
-    top: 100,
+  logo: {
+    width: 260,
+    height: 260,
   }
 });
